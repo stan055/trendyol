@@ -1,24 +1,58 @@
-const fs = require('fs');
+// const fs = require('fs');
 const puppeteer = require('puppeteer');
 const express = require('express');
 const path = require('path');
 const parser = require('./parser');
 
 
-const selectors = ".p-card-chldrn-cntnr a";
+const selectorsUrl = ".p-card-chldrn-cntnr a";
+const selectorsText = ".srch-ttl-cntnr-wrppr .dscrptn";
+const selectorsProduct = {
+    name: 'h1',
+    color: '.item-value', // last item
+    material: '.item-value',  // fifth element
+    price: 'span.prc-slg',
+    disprice: 'span.prc-org',
+    size: '.pr-in-at-sp'
+};
 
 const app = express();
 app.use(express.json());
 
+let page;
 
 app.post('/api', async (req, res) => {
-    console.log(req.body.url);
-    if (req.body.url) {
-        const page = await parser.configureBrowser(req.body.url);
-        const result = await parser.parseWithSelectors(page, selectors);
-        res.status(200).json({result: result});
+    if (req.body.type === 'start') {
+        page = await parser.configureBrowser();
+        await page.waitForTimeout(300);
+        await page.goto('https://en.trendyol.com/select-country');
+        await page.waitForTimeout(300);
+        await page.click('.row a');
+
+        const result = await parser.parseText(page, req.body.url, selectorsText);
+        if (result)
+            res.status(200).json({result: result});
+        else 
+            res.status(400).json({result: null});
+        
     }
-    
+
+    if (req.body.type === 'parsing') {
+        const urls = await parser.parseUrls(page, req.body.url, selectorsUrl);
+        if (urls) {
+            let result = [];
+            
+            for(let i = 0; i < urls.length - 22; i++) {
+                result[i] = await parser.parseProduct(page, urls[i], selectorsProduct);
+                console.log(result[i]);
+            }
+        
+            
+            res.status(200).json({result: result});
+        }
+        else 
+            res.status(400).json({result: null});
+    }
 });
 
 
