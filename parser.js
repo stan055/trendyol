@@ -2,27 +2,36 @@
 const puppeteer = require('puppeteer');
 
 
-async function configureBrowser (url) {
-    const browser = await puppeteer.launch({headless: true, slowMo: 100, devtools: false});
+async function configureBrowser (setting) {
+    const browser = await puppeteer.launch({
+            headless: !setting.display, 
+            slowMo: 100, 
+            devtools: false
+        });
     const page = await browser.newPage();
     await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36');
     return page; 
 }
 
-async function parseText (page, url, selectors) {
-    await page.goto(url);
+
+async function parseText (page, selectors) {
+    await page.waitForTimeout(200);
+    await page.waitForSelector(selectors);
 
     const result = await page.evaluate((sel) => {
         let item = document.querySelector(sel);
-        return item.innerText;
+        if (item) {
+            const result = item.innerText ?? "Failed to parse header!";
+            return result;
+        }
+        return "Failed to parse header!";
     }, selectors);
     
     return result;
 }
 
 
-async function parseUrls (page, url, selectors) {
-    await page.goto(url);
+async function parseUrls (page, selectors) {
 
     const result = await page.evaluate((sel) => {
         let items = document.querySelectorAll(sel);
@@ -35,36 +44,68 @@ async function parseUrls (page, url, selectors) {
 
 
 async function parseProduct (page, url, selectorsProduct) {
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(500);
+    await page.waitForSelector('script[type="application/javascript"]');
     await page.goto(url);
 
 
     const result = await page.evaluate((sel, url) => {
-        let product = {};
-        
-        try {
-            const colorNodes = document.querySelectorAll(sel['color']);
-            const sizeNodes = document.querySelectorAll("div.sp-itm:not(.so)");
-            const sizeList = [...sizeNodes];
-            const sizeText = sizeList.map(size => size.innerText).toString();
+        let resultProduct = { 
+            name: '',
+            code: '', 
+            id: 0,
+            color: '', 
+            brand: '',
+            material: '', 
+            price: '', 
+            disprice: '', 
+            size: '', 
+            url: url ,
+            time: 'test'
+        };
+        const initialScriptPatt = /{\s*"product"[\s\S]*"}}/;
 
-            product = {
-                name: document.querySelector(sel['name']).innerText,
-                color: document.querySelectorAll(sel['color'])[colorNodes.length - 1] .innerText,
-                material: document.querySelectorAll(sel['material'])[colorNodes.length - 4].innerText,
-                price: document.querySelector(sel['price']).innerText,
-                disprice: document.querySelector(sel['disprice']).innerText,
-                size: sizeText,
-                url: url
-            }    
+        try {
+            const scripts = document.querySelectorAll('script[type="application/javascript"]');
+            if (scripts[4]) {
+                const initialScriptText = scripts[4].innerText;
+                const initialJson = initialScriptText.match(initialScriptPatt);
+                const initialObj = JSON.parse(initialJson);
+                const product = initialObj.product;
+                
+                const price = {
+                        originalPrice: product.price.originalPrice,
+                        sellingPrice: product.price.sellingPrice,
+                        discountedPrice: product.price.discountedPrice,
+                    } 
+
+                const variants = product.variants.map(item => {
+                    return {
+                        attributeValue: item.attributeValue,
+                        stock: item.stock,
+                    }
+                });
+
+                resultProduct = {
+                    name: product.name ?? '',
+                    code: product.productCode ?? '',
+                    id: product.id ?? '',
+                    color: product.color ?? '',
+                    brand: product.brand.name ?? '',
+                    material: product.attributes[1].value.name ?? '',
+                    price: price ?? '',
+                    size: variants ?? '',
+                    url: url ?? '',
+                    time: new Date().toLocaleString(),
+                    test: ''
+                }  
+            }  
         } catch (error) {
-            product = {
-                name: '', color: '', material: '', price: '', disprice: '', size: '', url: url
-            };
             console.log(error);
         }
 
-        return product;
+        return resultProduct;
+
     }, selectorsProduct, url);
     
     return result;
