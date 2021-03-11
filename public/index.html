@@ -23,9 +23,17 @@
           <div class="container-start">
             
               <form >
+                <label for="inputUrl">From category</label>
                 <input id="inputUrl" type="url" placeholder="http://www.example.com" required>
                 <button id="btnStart" type="submit"> START </button>
               </form>
+
+              <div class="listArea">
+                <label for="inputUrl">From list </label>
+                <textarea id="inputUrlList" rows="5" cols="122" required></textarea>
+                <button id="btnStartList" type="submit"> START </button>
+              </div>
+                
 
               <div>
                 <div class="container-loader">
@@ -54,7 +62,9 @@
         </table>
 
     </div>
+    <script src="./utils.js"></script>
     <script src="./parsing.js"></script>
+    <script src="./parseFromList.js"></script>
     <script src="./index.js"></script>
     <script src="./setting.js"></script>
 </body>
