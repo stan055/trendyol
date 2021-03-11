@@ -29,16 +29,23 @@ async function parsing (url) {
 
 function createRow (element) {
   let newRow = tableRef.insertRow(0);
+
   newRow.innerHTML = 
     `<tr>
       <th scope="row">${productCounter++}</th>
-      <td>${element.name}</td>
-      <td><a href="${element.url}">${element.url}</a></td>
-      <td>${element.price}</td>
-      <td>${element.disprice}</td>
-      <td>${element.material}</td>
-      <td>${element.color}</td>
-      <td>${element.size}</td>
-      <td>${element.time}</td>
+      <td style="width: 230px;">${element.name}</td>
+      <td style="width: 300px;"><a href="${element.url}">${element.url}</a></td>
+      <td style="width: 100px;">${element.brand}</td>
+      <td style="width: 100px;">${element.code}</td>
+      <td style="width: 80px;">${element.id}</td>
+      <td style="width: 170px;">
+        originalPrice: ${element.price.originalPrice.text}, 
+        <br>
+        discountedPrice: ${element.price.discountedPrice.text}
+      </td>
+      <td style="width: 170px;">
+        ${JSON.stringify(element.size)}
+      </td>
+      <td style="width: 80px;">${element.time}</td>
     </tr>`;
 }

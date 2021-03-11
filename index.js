@@ -2,7 +2,7 @@
 const puppeteer = require('puppeteer');
 const express = require('express');
 const path = require('path');
-const parser = require('./parser');
+const parser = require('./parser/parser');
 const selectors  = require('./selectors');
 
 const app = express();
@@ -37,12 +37,14 @@ app.post('/api', async (req, res) => {
 
 async function apiStart (_url, _setting, _selectors) {
     page = await parser.configureBrowser(_setting);
-    await page.goto(_url);
+    await page.goto(_url, { waitUntil: 'domcontentloaded' });
 
     const url = new URL(page.url());
     if (url.pathname === '/select-country') {
-        await page.waitForTimeout(300);
+        await page.waitForTimeout(500);
         await page.click('.row a');
+        await page.waitForTimeout(500);
+        await page.goto(_url, { waitUntil: 'domcontentloaded' });
     }
 
     return parser.parseText(page, _selectors);
