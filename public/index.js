@@ -21,17 +21,17 @@ btnStart.addEventListener('click', () => {
         setResultHeader(data['result']);
 
         let url = inputUrl.value;
-        let urlCount = parseUrlsPi(url);
+        let urlCount = searchParamPi(url);
         let response = true;
-        response = await parsing(url);
 
-        // while (response) {
+        while (response) {
 
-        //   response = await parsing(url);
+          response = await parsing(url);
 
-        //   urlCount++;
-        //   url = setUrlNewPi(url, urlCount);
-        // }
+          urlCount++;
+          url = setUrlNewPi(url, urlCount);
+          console.log(url);
+        }
 
       })
       .catch((error) => {

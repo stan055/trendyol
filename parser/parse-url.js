@@ -1,4 +1,6 @@
-async function parseUrls (page, selectors) {
+async function parseUrls (page, url, selectors) {
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(400);
 
     const result = await page.evaluate((sel) => {
         let items = document.querySelectorAll(sel);

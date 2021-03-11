@@ -11,7 +11,7 @@ async function parsing (url) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
+      console.log('parsing: ', data);
       data.result.forEach(element => {
         createRow(element);
       });

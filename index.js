@@ -23,7 +23,7 @@ app.post('/api', async (req, res) => {
 
 
     if (req.body.type === 'parsing') {
-        const urls = await parser.parseUrls(page, selectors.url);
+        const urls = await parser.parseUrls(page, req.body.url, selectors.url);
         if (urls) {
             let result = await apiParsing(urls);
             res.status(200).json({result: result});

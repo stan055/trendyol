@@ -14,7 +14,7 @@ function setUrlNewPi (url, pi) {
   }
   
   
-  function parseUrlsPi (url) {
+  function searchParamPi (url) {
     const searchParams = new URL(url).searchParams;
     const pi = searchParams.get("pi") ?? 1;
     return parseInt(pi);
@@ -30,6 +30,16 @@ function setUrlNewPi (url, pi) {
   function createRow (element) {
     let newRow = tableRef.insertRow(0);
     
+    let attributesStr = element.attributes.map(e => {
+      atrStr = e.key.name + ': ' + e.value.name;
+      return atrStr;
+    }).toString();
+
+    let size = element.size.map(e => {
+      sizeStr = e.value + '(' + 'stock:' + e.stock + ')';
+      return sizeStr;
+    }).toString();
+
     newRow.innerHTML = 
       `<tr>
         <th scope="row">${productCounter++}</th>
@@ -43,9 +53,10 @@ function setUrlNewPi (url, pi) {
           <br>
           discountedPrice: ${element.price.discountedPrice.text}
         </td>
-        <td style="width: 170px;">
-          ${JSON.stringify(element.size)}
+        <td style="width: 300px;">
+          ${size}
         </td>
+        <td style="width: 300px;">${attributesStr}</td>
         <td style="width: 80px;">${element.time}</td>
       </tr>`;
 
