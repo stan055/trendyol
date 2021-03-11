@@ -6,17 +6,21 @@ const pattUrl = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]
 btnStartList.addEventListener('click',  (e) => {
     let str = textArea.value;
     let urls = str.match(pattUrl);
+    console.log(urls);
 
     if (urls) {
-        urls.forEach(async (element) => {
-            setResultHeader(element);
-
-            await parsingOneUrl(element);
-        });
+      parsingListUrl(urls);
     }
 })
 
-
+async function parsingListUrl (urls) {
+  for (const url of urls) {
+    setResultHeader(url);
+    const result = await parsingOneUrl(url);
+    console.log(result);
+    createRow(result);
+  }
+}
 
 async function parsingOneUrl (url) {
   const result = await fetch('/api', {
@@ -24,14 +28,13 @@ async function parsingOneUrl (url) {
       headers: { 'Content-Type': 'application/json',},
       body: JSON.stringify({
         url: url,
-        type: 'parsing-one-url'
+        type: 'parsing-one-url',
+        setting: setting
       })
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
-      createRow(data.result);
-      return true;      
+      return data.result;      
     })
     .catch((error) => {
       resultHeader.innerHTML = `<p style="color: red;"> ${error} <p>`;

@@ -1,12 +1,11 @@
 
-async function parseProduct (page, url, selectorsProduct) {
-
+async function parseProduct (page, url) {
 
     await page.waitForTimeout(500);
     await page.goto(url, { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(500);
 
-    const result = await page.evaluate((sel, url) => {
+    const result = await page.evaluate((url) => {
         const scriptSearch = 'PRODUCT_DETAIL_APP_INITIAL_STATE';
         const scriptPatt = /{\s*"product"[\s\S]*"}}/;
         const scripts = document.querySelectorAll('script[type="application/javascript"]');
@@ -61,7 +60,7 @@ async function parseProduct (page, url, selectorsProduct) {
 
         return resultProduct;
 
-    }, selectorsProduct, url);
+    }, url);
     
     return result;
 }

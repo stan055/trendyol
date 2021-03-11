@@ -13,7 +13,8 @@ let page;
 app.post('/api', async (req, res) => {
 
     if (req.body.type === 'start') {
-        const result = await apiStart(req.body.url, req.body.setting, selectors.text)
+        await apiStart(req.body.url, req.body.setting);
+        const result = await parser.parseText(page, selectors.text, req.body.url);
         if (result)
             res.status(200).json({result: result});
         else 
@@ -24,9 +25,21 @@ app.post('/api', async (req, res) => {
     if (req.body.type === 'parsing') {
         const urls = await parser.parseUrls(page, selectors.url);
         if (urls) {
-            let result = await apiParsing(urls, );
+            let result = await apiParsing(urls);
             res.status(200).json({result: result});
         }
+        else 
+            res.status(400).json({result: null});
+    }
+
+
+    if (req.body.type === 'parsing-one-url') {
+        if (!page) {
+            await apiStart(req.body.url, req.body.setting);
+        }
+        const result = await parser.parseProduct(page, req.body.url);
+        if (result)
+            res.status(200).json({result: result});
         else 
             res.status(400).json({result: null});
     }
@@ -35,7 +48,7 @@ app.post('/api', async (req, res) => {
 
 
 
-async function apiStart (_url, _setting, _selectors) {
+async function apiStart (_url, _setting) {
     page = await parser.configureBrowser(_setting);
     await page.goto(_url, { waitUntil: 'domcontentloaded' });
 
@@ -44,24 +57,23 @@ async function apiStart (_url, _setting, _selectors) {
         await page.waitForTimeout(500);
         await page.click('.row a');
         await page.waitForTimeout(500);
-        await page.goto(_url, { waitUntil: 'domcontentloaded' });
     }
-
-    return parser.parseText(page, _selectors);
 }
 
 
 
-async function apiParsing (_urls, _selectors) {
+async function apiParsing (_urls) {
     let result = [];
 
     for(let i = 0; i < _urls.length - 23; i++) {
-        result[i] = await parser.parseProduct(page, _urls[i], _selectors);
+        result[i] = await parser.parseProduct(page, _urls[i]);
         console.log(result[i]);
     }
 
     return result;
 }
+
+
 
 
 app.use(express.static(path.join(__dirname, 'public')));

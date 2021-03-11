@@ -29,7 +29,7 @@ function setUrlNewPi (url, pi) {
 
   function createRow (element) {
     let newRow = tableRef.insertRow(0);
-  
+    
     newRow.innerHTML = 
       `<tr>
         <th scope="row">${productCounter++}</th>
@@ -48,4 +48,9 @@ function setUrlNewPi (url, pi) {
         </td>
         <td style="width: 80px;">${element.time}</td>
       </tr>`;
+
+      // Delete row if length > 50
+      if (tableRef.rows.length > 50) {
+        tableRef.deleteRow(tableRef.rows.length - 1);
+      }
   }

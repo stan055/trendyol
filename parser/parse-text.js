@@ -1,5 +1,6 @@
-async function parseText (page, selectors) {
-    await page.waitForTimeout(400);
+async function parseText (page, selectors, url) {
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(200);
 
     const result = await page.evaluate((sel) => {
         let item = document.querySelector(sel);

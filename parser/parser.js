@@ -4,7 +4,6 @@ const configureBrowser = require('./configure-browser');
 const parseText = require('./parse-text');
 const parseUrls = require('./parse-url');
 
-
 exports.configureBrowser = configureBrowser.configureBrowser;
 exports.parseUrls = parseUrls.parseUrls;
 exports.parseText = parseText.parseText;
