@@ -1,9 +1,7 @@
-
 async function parseProduct (page, url) {
-
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(600);
     await page.goto(url, { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(600);
 
     const result = await page.evaluate((url) => {
         const scriptSearch = 'PRODUCT_DETAIL_APP_INITIAL_STATE';
@@ -52,10 +50,14 @@ async function parseProduct (page, url) {
                     size: variants ?? '',
                     url: url ?? '',
                     time: new Date().toLocaleString(),
+                    error: null
                 }  
             }  
         } catch (error) {
             console.log(error);
+            resultProduct = {
+                error: error
+            };
         }
 
         return resultProduct;

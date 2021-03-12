@@ -17,17 +17,25 @@ btnStart.addEventListener('click', () => {
       })
       .then(response => response.json())
       .then(async data => {
-        console.log("Response data: ", data);
         setResultHeader(data['result']);
 
         let url = inputUrl.value;
         let urlCount = searchParamPi(url);
-        let response = true;
+        let urls;
 
-        while (response && !categoryBtnStopSwitch) {
+        while (!categoryBtnStopSwitch) {
 
-          response = await parsing(url);
+          urls = await scrapCategoryPage(url);
 
+          if (urls['result'].length !== 0 && urls['result'] !== null) {
+            console.log()
+            await scrapFromListUrls(urls['result']);
+          } else {
+            console.log('urls failed');
+            categoryBtnStopSwitch = !categoryBtnStopSwitch;
+          }
+          
+          categoryBtnStopSwitch = !categoryBtnStopSwitch;
           urlCount++;
           url = setUrlNewPi(url, urlCount);
         }

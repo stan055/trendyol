@@ -22,11 +22,10 @@ app.post('/api', async (req, res) => {
     }
 
 
-    if (req.body.type === 'parsing') {
-        const urls = await parser.parseUrls(page, req.body.url, selectors.url);
+    if (req.body.type === 'scraping-urls') {
+        const urls = await parser.scrapingUrls(page, req.body.url, selectors.url);
         if (urls) {
-            let result = await apiParsing(urls);
-            res.status(200).json({result: result});
+            res.status(200).json({result: urls});
         }
         else 
             res.status(400).json({result: null});
@@ -39,14 +38,17 @@ app.post('/api', async (req, res) => {
         }
         const result = await parser.parseProduct(page, req.body.url);
         if (result) {
-            fs.appendFile('./public/data.txt', JSON.stringify(result) + '\n', function (err) {
-                if (err) throw err;
-                console.log('Saved! of parsing-one-url');
-            });
+            if (result.error !== null) {
+                fs.appendFile('./public/data.txt', JSON.stringify(result) + '\n', function (err) {
+                    if (err) throw err;
+                    console.log('Saved! of parsing-one-url');
+                });
+            }
             res.status(200).json({result: result});
         }
-        else 
+        else {
             res.status(400).json({result: null});
+        }
     }
 
 });
@@ -70,17 +72,6 @@ async function apiStart (_url, _setting) {
     });
 }
 
-
-async function apiParsing (_urls) {
-    let result = [];
-
-    for(let i = 0; i < _urls.length - 23; i++) {
-        result[i] = await parser.parseProduct(page, _urls[i]);
-        console.log(result[i]);
-    }
-
-    return result;
-}
 
 
 app.use(express.static(path.join(__dirname, 'public')));
