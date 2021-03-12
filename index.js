@@ -39,9 +39,9 @@ app.post('/api', async (req, res) => {
         }
         const result = await parser.parseProduct(page, req.body.url);
         if (result) {
-            fs.appendFile('./public/data.txt', JSON.stringify(result), function (err) {
+            fs.appendFile('./public/data.txt', JSON.stringify(result) + '\n', function (err) {
                 if (err) throw err;
-                console.log('Saved!');
+                console.log('Saved! of parsing-one-url');
             });
             res.status(200).json({result: result});
         }
@@ -63,6 +63,11 @@ async function apiStart (_url, _setting) {
         await page.click('.row a');
         await page.waitForTimeout(500);
     }
+
+    fs.writeFile('./public/data.txt', `Start... ${new Date().toLocaleString()}\n`, function (err) {
+        if (err) throw err;
+        console.log('Saved! of start...');
+    });
 }
 
 
