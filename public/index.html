@@ -25,13 +25,15 @@
               <form >
                 <label for="inputUrl">From category</label>
                 <input id="inputUrl" type="url" placeholder="http://www.example.com" required>
-                <button id="btnStart" type="submit"> START </button>
+                <button id="btnStart" class="btn-start" type="submit"> START </button>
+                <button id="btnStop" class="btn-stop" type="submit"> STOP </button>
               </form>
 
               <div class="listArea">
                 <label for="inputUrl">From list </label>
                 <textarea id="inputUrlList" rows="5" required></textarea>
-                <button id="btnStartList" type="submit"> START </button>
+                <button id="btnStartList" class="btn-start" type="submit"> START </button>
+                <button id="btnStopList" class="btn-stop" type="submit"> STOP </button>
               </div>
                 
 
@@ -47,13 +49,13 @@
           <thead>
             <tr>
               <th>#</th>
-              <th style="width: 230px;">Name</th>
+              <th style="width: 210px;">Name</th>
               <th style="width: 420px;">URL</th>
               <th style="width: 100px;">Brand</th>
               <th style="width: 100px;">Code/ID</th>
               <th style="width: 130px;">Price</th>
               <th style="width: 170px;">Size</th>
-              <th style="width: 480px;">Attributes</th>
+              <th style="width: 500px;">Attributes</th>
               <th style="width: 80px;">Time</th>
             </tr>
           </thead>
@@ -63,6 +65,7 @@
 
     </div>
     <script src="./js/utils.js"></script>
+    <script src="./js/create-table-row.js"></script>
     <script src="./js/parsing.js"></script>
     <script src="./js/parseFromList.js"></script>
     <script src="./index.js"></script>

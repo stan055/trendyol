@@ -58,17 +58,28 @@ body {
   }
 
   .container-start input {
-    width: 800px;
+    width: 750px;
     padding: 0.4rem;
   }
 
   .container-start button {
-    background-color: green; 
     color: white; 
-    border: 2px solid green; 
     border-radius: 5px;
     padding: 0.4rem;
 
+  }
+
+  .btn-start {
+    background-color: green;
+    border: 2px solid green;
+  }
+
+  .btn-stop {
+    background-color: brown;
+    border: 2px solid brown;   
+  }
+  #btnStopList {
+    margin-left: 5px;
   }
 
   .listArea {
@@ -79,7 +90,7 @@ body {
 
   textarea {
     margin-left: 45px;
-    width: 800px;
+    width: 750px;
     padding: .4rem;
   }
 
