@@ -104,6 +104,10 @@ body {
     align-items: center;
   }
 
+  .download-data-link {
+    padding: .3rem;
+  }
+
   table {
     font-size: x-small;
     margin-top: 1rem;

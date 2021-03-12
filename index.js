@@ -1,4 +1,4 @@
-// const fs = require('fs');
+const fs = require('fs');
 const puppeteer = require('puppeteer');
 const express = require('express');
 const path = require('path');
@@ -38,8 +38,13 @@ app.post('/api', async (req, res) => {
             await apiStart(req.body.url, req.body.setting);
         }
         const result = await parser.parseProduct(page, req.body.url);
-        if (result)
+        if (result) {
+            fs.appendFile('./public/data.txt', JSON.stringify(result), function (err) {
+                if (err) throw err;
+                console.log('Saved!');
+            });
             res.status(200).json({result: result});
+        }
         else 
             res.status(400).json({result: null});
     }
@@ -61,7 +66,6 @@ async function apiStart (_url, _setting) {
 }
 
 
-
 async function apiParsing (_urls) {
     let result = [];
 
@@ -72,8 +76,6 @@ async function apiParsing (_urls) {
 
     return result;
 }
-
-
 
 
 app.use(express.static(path.join(__dirname, 'public')));
