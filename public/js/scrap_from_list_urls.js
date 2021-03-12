@@ -3,7 +3,10 @@ async function scrapFromListUrls (urls, parrentUrl) {
       if (!btnStopSwitch) {
         setResultHeader(url);
         const result = await scrapProductPage(url);
-        createTableRow(result, parrentUrl);
+        if (resu) {
+          console.log(result);
+          createTableRow(result, parrentUrl);
+        }
       }
     }
   }
