@@ -31,7 +31,6 @@ btnStart.addEventListener('click', () => {
           urls = await scrapCategoryPage(categoryUrl);
 
           if (urls['result'].length !== 0 && urls['result'] !== null) {
-            console.log()
             await scrapFromListUrls(urls['result'], categoryUrl);
           } else {
             resultHeader = 'urls failed';

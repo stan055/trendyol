@@ -1,6 +1,7 @@
 btnStartList.addEventListener('click',  (e) => {
     let str = textArea.value;
     let urls = str.match(pattUrl);
+    
     btnStopSwitch = false;
     tableRef.innerHTML = ''; // Clean table
     productCounter = 0;
