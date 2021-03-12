@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 const express = require('express');
 const path = require('path');
 const parser = require('./parser/parser');
-const selectors  = require('./selectors');
+const selectors  = require('./parser/selectors');
 
 const app = express();
 app.use(express.json());
