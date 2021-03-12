@@ -8,7 +8,7 @@ async function apiStart (page, _url, _setting) {
     const url = new URL(page.url());
     if (url.pathname === '/select-country') {
         await page.waitForTimeout(500);
-        await page.click('.row a');
+        await page.click('.row:last-child a:last-child');
         await page.waitForTimeout(500);
     }
 

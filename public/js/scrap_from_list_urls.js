@@ -1,9 +1,9 @@
-async function scrapFromListUrls (urls) {
+async function scrapFromListUrls (urls, parrentUrl) {
     for (const url of urls) {
       if (!btnStopSwitch) {
         setResultHeader(url);
         const result = await scrapProductPage(url);
-        createTableRow(result);
+        createTableRow(result, parrentUrl);
       }
     }
   }

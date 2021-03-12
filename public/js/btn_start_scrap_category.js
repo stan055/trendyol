@@ -21,25 +21,25 @@ btnStart.addEventListener('click', () => {
       .then(async data => {
         setResultHeader(data['result']);
 
-        let url = inputUrl.value;
-        let urlCount = searchParamPi(url);
+        let categoryUrl = inputUrl.value;
+        let urlCount = searchParamPi(categoryUrl);
         let urls;
         let resultHeader = "Work is done...";
 
         while (!btnStopSwitch) {
 
-          urls = await scrapCategoryPage(url);
+          urls = await scrapCategoryPage(categoryUrl);
 
           if (urls['result'].length !== 0 && urls['result'] !== null) {
             console.log()
-            await scrapFromListUrls(urls['result']);
+            await scrapFromListUrls(urls['result'], categoryUrl);
           } else {
             resultHeader = 'urls failed';
             btnStopSwitch = !btnStopSwitch;
           }
           
           urlCount++;
-          url = setUrlNewPi(url, urlCount);
+          categoryUrl = setUrlNewPi(categoryUrl, urlCount);
         }
         setResultHeader(resultHeader, false);
       })
