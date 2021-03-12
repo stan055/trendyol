@@ -15,6 +15,7 @@ function setUrlNewPi (url, pi) {
   
   function setResultHeader (text) {
     resultHeader.innerHTML = `<p style="color: grey;"> ${text} </p>`;
+    downloadDataLink.classList.add("show");
     loader.classList.add("loader");
   }
 

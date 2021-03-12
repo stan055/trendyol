@@ -10,7 +10,9 @@ const tableRef = document.getElementById('resultTable').getElementsByTagName('tb
 const categoryBtnStop = document.getElementById('categoryBtnStop');
 const listBtnStop = document.getElementById('listBtnStop');
 const pattUrl = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
+const downloadDataLink = document.getElementById('downloadDataLink');
 
+console.log(downloadDataLink);
 
 let productCounter = 0;
 let categoryBtnStopSwitch = false;
