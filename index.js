@@ -38,7 +38,7 @@ app.post('/api', async (req, res) => {
         }
         const result = await parser.parseProduct(page, req.body.url);
         if (result) {
-            if (result.error !== null) {
+            if (result.error === null) {
                 fs.appendFile('./public/data.txt', JSON.stringify(result) + '\n', function (err) {
                     if (err) throw err;
                     console.log('Saved! of parsing-one-url');
