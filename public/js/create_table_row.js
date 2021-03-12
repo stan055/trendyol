@@ -1,7 +1,9 @@
 
 function createTableRow (element, parrentUrl = '') {
-    let newRow = tableRef.insertRow(0);
-    
+  let newRow = tableRef.insertRow(0);
+  let elementUrl = element.url ?? 'undefined';
+  
+  try {
     let attributesStr = element.attributes.map(e => {
       atrStr = ' ' + e.key.name + ': ' + e.value.name;
       return atrStr;
@@ -16,7 +18,7 @@ function createTableRow (element, parrentUrl = '') {
       `<tr>
         <th scope="row">${productCounter++}</th>
         <td>${element.name}</td>
-        <td><a href="${element.url}">${element.url}</a></td>
+        <td><a href="${elementUrl}">${elementUrl}</a></td>
         <td>${element.brand}</td>
         <td>${element.code}<br>${element.id}</td>
         <td>
@@ -31,9 +33,25 @@ function createTableRow (element, parrentUrl = '') {
         <td>${element.time}</td>
         <td><a href="${parrentUrl}">${parrentUrl}</a></td>
       </tr>`;
-
-      // Delete row if length > 50
-      if (tableRef.rows.length > 50) {
-        tableRef.deleteRow(tableRef.rows.length - 1);
-      }
+  } catch (error) {
+    console.log(error);
+    setResultHeader(resultHeader);
+    newRow.innerHTML = 
+    `<tr>
+      <th scope="row">#</th>
+      <td>undefined</td>
+      <td>${elementUrl}</td>
+      <td>undefined</td>
+      <td>undefined</td>
+      <td>undefined</td>
+      <td>undefined</td>
+      <td>undefined</td>
+      <td>undefined</td>
+      <td>${parrentUrl}</td>
+    </tr>`;
+  }
+    // Delete row if length > 50
+    if (tableRef.rows.length > 50) {
+      tableRef.deleteRow(tableRef.rows.length - 1);
+    }
   }

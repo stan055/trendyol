@@ -3,7 +3,7 @@ async function scrapFromListUrls (urls, parrentUrl) {
       if (!btnStopSwitch) {
         setResultHeader(url);
         const result = await scrapProductPage(url);
-        if (resu) {
+        if (result) {
           console.log(result);
           createTableRow(result, parrentUrl);
         }

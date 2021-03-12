@@ -8,8 +8,7 @@ async function parseProduct (page, url) {
         const scriptPatt = /{\s*"product"[\s\S]*"}}/;
         const scripts = document.querySelectorAll('script[type="application/javascript"]');
         
-
-        let resultProduct = {};
+        let resultProduct = { error: 'error', url: url };
 
         let scriptProductText;
         scripts.forEach(script => {
