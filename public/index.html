@@ -22,18 +22,18 @@
       </div>
           <div class="container-start">
             
-              <form >
+              <div>
                 <label for="inputUrl">From category</label>
                 <input id="inputUrl" type="url" placeholder="http://www.example.com" required>
                 <button id="btnStart" class="btn-start" type="submit"> START </button>
-                <button id="btnStop" class="btn-stop" type="submit"> STOP </button>
-              </form>
+                <button id="categoryBtnStop" class="btn-stop" type="submit"> STOP </button>
+              </div>
 
               <div class="listArea">
                 <label for="inputUrl">From list </label>
                 <textarea id="inputUrlList" rows="5" required></textarea>
                 <button id="btnStartList" class="btn-start" type="submit"> START </button>
-                <button id="btnStopList" class="btn-stop" type="submit"> STOP </button>
+                <button id="listBtnStop" class="btn-stop" type="submit"> STOP </button>
               </div>
                 
 
@@ -64,11 +64,13 @@
         </table>
 
     </div>
+    <script src="./index.js"></script>
+    <script src="./js/btns-stop-listeners.js"></script>
     <script src="./js/utils.js"></script>
     <script src="./js/create-table-row.js"></script>
+    <script src="./js/parse-from-category.js"></script>
     <script src="./js/parsing.js"></script>
     <script src="./js/parseFromList.js"></script>
-    <script src="./index.js"></script>
     <script src="./js/setting.js"></script>
 </body>
 </html>

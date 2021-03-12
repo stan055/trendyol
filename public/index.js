@@ -1,44 +1,21 @@
+const btnStart = document.getElementById('btnStart');
+const inputUrl = document.getElementById('inputUrl');
+const resultHeader = document.getElementById('resultHeader');
+const loader = document.getElementById('loader');
+var setting = { display: false };
+const settingBrowser = document.getElementById('browser');
+const btnStartList = document.querySelector('#btnStartList');
+const textArea = document.querySelector('#inputUrlList');
+const tableRef = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+const categoryBtnStop = document.getElementById('categoryBtnStop');
+const listBtnStop = document.getElementById('listBtnStop');
+const pattUrl = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
 
-btnStart.addEventListener('click', () => {
-    event.preventDefault();
 
-    resultHeader.innerHTML = inputUrl.value;
+let productCounter = 0;
+let categoryBtnStopSwitch = false;
+let listBtnStopSwitch = false;
 
-    fetch('/api', {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          url: inputUrl.value,
-          type: 'start',
-          setting: setting
-        })
-      })
-      .then(response => response.json())
-      .then(async data => {
-        console.log("Response data: ", data);
-        setResultHeader(data['result']);
-
-        let url = inputUrl.value;
-        let urlCount = searchParamPi(url);
-        let response = true;
-
-        while (response) {
-
-          response = await parsing(url);
-
-          urlCount++;
-          url = setUrlNewPi(url, urlCount);
-          console.log(url);
-        }
-
-      })
-      .catch((error) => {
-        resultHeader.innerHTML = `<p style="color: red;"> ${error} <p>`;
-        
-      });
-});
 
 
 

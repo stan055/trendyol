@@ -1,4 +1,3 @@
-const tableRef = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
 
 
 function createTableRow (element) {

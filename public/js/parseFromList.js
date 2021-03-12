@@ -1,12 +1,8 @@
-const btnStartList = document.querySelector('#btnStartList');
-const textArea = document.querySelector('#inputUrlList');
-
-const pattUrl = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
 
 btnStartList.addEventListener('click',  (e) => {
     let str = textArea.value;
     let urls = str.match(pattUrl);
-    console.log(urls);
+    listBtnStopSwitch = false;
 
     if (urls) {
       parsingListUrl(urls);
@@ -15,10 +11,12 @@ btnStartList.addEventListener('click',  (e) => {
 
 async function parsingListUrl (urls) {
   for (const url of urls) {
-    setResultHeader(url);
-    const result = await parsingOneUrl(url);
-    console.log(result);
-    createTableRow(result);
+    if (!listBtnStopSwitch) {
+      setResultHeader(url);
+      const result = await parsingOneUrl(url);
+      console.log(result);
+      createTableRow(result);
+    }
   }
 }
 

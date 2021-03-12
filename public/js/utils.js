@@ -1,10 +1,3 @@
-const btnStart = document.getElementById('btnStart');
-const inputUrl = document.getElementById('inputUrl');
-const resultHeader = document.getElementById('resultHeader');
-const loader = document.getElementById('loader');
-var setting = { display: false };
-
-
 function setUrlNewPi (url, pi) {
     const newUrl = new URL(url);
     const searchParams = newUrl.searchParams;

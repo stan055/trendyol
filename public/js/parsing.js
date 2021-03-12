@@ -1,4 +1,3 @@
-let productCounter = 0;
 
 async function parsing (url) {
   const result = await fetch('/api', {
@@ -13,7 +12,7 @@ async function parsing (url) {
     .then(data => {
       console.log('parsing: ', data);
       data.result.forEach(element => {
-        createRow(element);
+        createTableRow(element);
       });
 
       return true;      
