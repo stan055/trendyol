@@ -1,9 +1,11 @@
 btnStart.addEventListener('click', () => {
-    event.preventDefault();
 
     resultHeader.innerHTML = inputUrl.value;
-    categoryBtnStopSwitch = false;
-    
+    btnStopSwitch = false;
+    tableRef.innerHTML = ''; //Clean table
+    productCounter = 0;
+    setResultHeader('Start work');
+
     fetch('/api', {
         method: 'post',
         headers: {
@@ -23,7 +25,7 @@ btnStart.addEventListener('click', () => {
         let urlCount = searchParamPi(url);
         let urls;
 
-        while (!categoryBtnStopSwitch) {
+        while (!btnStopSwitch) {
 
           urls = await scrapCategoryPage(url);
 
@@ -32,17 +34,15 @@ btnStart.addEventListener('click', () => {
             await scrapFromListUrls(urls['result']);
           } else {
             console.log('urls failed');
-            categoryBtnStopSwitch = !categoryBtnStopSwitch;
+            btnStopSwitch = !btnStopSwitch;
           }
           
-          categoryBtnStopSwitch = !categoryBtnStopSwitch;
           urlCount++;
           url = setUrlNewPi(url, urlCount);
         }
-
+        setResultHeader('Work is done...', false);
       })
       .catch((error) => {
-        resultHeader.innerHTML = `<p style="color: red;"> ${error} <p>`;
-        
+        setResultHeader(error, false);
       });
 });

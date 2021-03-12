@@ -13,10 +13,14 @@ function setUrlNewPi (url, pi) {
   }
   
   
-  function setResultHeader (text) {
+  function setResultHeader (text, _loader = true) {
     resultHeader.innerHTML = `<p style="color: grey;"> ${text} </p>`;
     downloadDataLink.classList.add("show");
-    loader.classList.add("loader");
+    if (_loader) {
+      loader.classList.add("loader");
+    } else {
+      loader.classList.remove("loader");
+    }
   }
 
 

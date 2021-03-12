@@ -1,6 +1,6 @@
 async function scrapFromListUrls (urls) {
     for (const url of urls) {
-      if (!listBtnStopSwitch) {
+      if (!btnStopSwitch) {
         setResultHeader(url);
         const result = await scrapProductPage(url);
         createTableRow(result);

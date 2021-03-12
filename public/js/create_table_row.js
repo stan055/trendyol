@@ -1,5 +1,4 @@
 
-
 function createTableRow (element) {
     let newRow = tableRef.insertRow(0);
     

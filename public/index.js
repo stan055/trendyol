@@ -14,8 +14,7 @@ const downloadDataLink = document.getElementById('downloadDataLink');
 
 
 let productCounter = 0;
-let categoryBtnStopSwitch = false;
-let listBtnStopSwitch = false;
+let btnStopSwitch = false;
 
 
 

@@ -61,7 +61,6 @@ async function parseProduct (page, url) {
         }
 
         return resultProduct;
-
     }, url);
     
     return result;

@@ -1,8 +1,10 @@
 categoryBtnStop.addEventListener('click', e => {
-    categoryBtnStopSwitch = true;
+    btnStopSwitch = true;
+    setResultHeader('Work stopped...', false);
 });
 
 
 listBtnStop.addEventListener('click', e => {
-    listBtnStopSwitch = true;
+    btnStopSwitch = true;
+    setResultHeader('Work stopped...', false);
 });
