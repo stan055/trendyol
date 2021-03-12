@@ -3,6 +3,7 @@ const puppeteer = require('puppeteer');
 const express = require('express');
 const path = require('path');
 const parser = require('./parser/parser');
+const apiStart = require('./parser/api_start');
 const selectors  = require('./parser/selectors');
 
 const app = express();
@@ -13,7 +14,7 @@ let page;
 app.post('/api', async (req, res) => {
 
     if (req.body.type === 'start') {
-        await apiStart(req.body.url, req.body.setting);
+        page = await apiStart.start(page, req.body.url, req.body.setting);
         const result = await parser.parseText(page, selectors.text, req.body.url);
         if (result)
             res.status(200).json({result: result});
@@ -34,7 +35,7 @@ app.post('/api', async (req, res) => {
 
     if (req.body.type === 'parsing-one-url') {
         if (!page) {
-            await apiStart(req.body.url, req.body.setting);
+            page = await apiStart.start(page, req.body.url, req.body.setting);
         }
         const result = await parser.parseProduct(page, req.body.url);
         if (result) {
@@ -53,24 +54,6 @@ app.post('/api', async (req, res) => {
 
 });
 
-
-
-async function apiStart (_url, _setting) {
-    page = await parser.configureBrowser(_setting);
-    await page.goto(_url, { waitUntil: 'domcontentloaded' });
-
-    const url = new URL(page.url());
-    if (url.pathname === '/select-country') {
-        await page.waitForTimeout(500);
-        await page.click('.row a');
-        await page.waitForTimeout(500);
-    }
-
-    fs.writeFile('./public/data.txt', `Start... ${new Date().toLocaleString()}\n`, function (err) {
-        if (err) throw err;
-        console.log('Saved! of start...');
-    });
-}
 
 
 
