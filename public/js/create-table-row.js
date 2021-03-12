@@ -1,4 +1,7 @@
-function createRow (element) {
+const tableRef = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+
+
+function createTableRow (element) {
     let newRow = tableRef.insertRow(0);
     
     let attributesStr = element.attributes.map(e => {

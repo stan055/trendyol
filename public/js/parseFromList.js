@@ -18,7 +18,7 @@ async function parsingListUrl (urls) {
     setResultHeader(url);
     const result = await parsingOneUrl(url);
     console.log(result);
-    createRow(result);
+    createTableRow(result);
   }
 }
 
