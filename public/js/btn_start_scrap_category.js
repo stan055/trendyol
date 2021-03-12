@@ -24,6 +24,7 @@ btnStart.addEventListener('click', () => {
         let url = inputUrl.value;
         let urlCount = searchParamPi(url);
         let urls;
+        let resultHeader = "Work is done...";
 
         while (!btnStopSwitch) {
 
@@ -33,14 +34,14 @@ btnStart.addEventListener('click', () => {
             console.log()
             await scrapFromListUrls(urls['result']);
           } else {
-            console.log('urls failed');
+            resultHeader = 'urls failed';
             btnStopSwitch = !btnStopSwitch;
           }
           
           urlCount++;
           url = setUrlNewPi(url, urlCount);
         }
-        setResultHeader('Work is done...', false);
+        setResultHeader(resultHeader, false);
       })
       .catch((error) => {
         setResultHeader(error, false);
