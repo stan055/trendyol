@@ -4,7 +4,6 @@ async function scrapFromListUrls (urls, parrentUrl) {
         setResultHeader(url);
         const result = await scrapProductPage(url);
         if (result) {
-          console.log(result);
           createTableRow(result, parrentUrl);
         }
       }

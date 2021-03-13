@@ -37,7 +37,6 @@ app.post('/api', async (req, res) => {
             page = await apiStart.start(page, req.body.url, req.body.setting);
         }
         const result = await parser.parseProduct(page, req.body.url);
-        console.log(result);
         if (result) {
             if (result.error === null) {
                 let xml = parser.toXml(result);

@@ -54,7 +54,6 @@ async function parseProduct (page, url) {
                 }  
             }  
         } catch (error) {
-            console.log(error);
             resultProduct = {
                 error: error
             };
