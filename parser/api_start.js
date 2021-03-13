@@ -12,7 +12,7 @@ async function apiStart (page, _url, _setting) {
         await page.waitForTimeout(500);
     }
 
-    fs.writeFile('./public/data.txt', `Start... ${new Date().toLocaleString()}\n`, function (err) {
+    fs.writeFile('./public/data.xml', `Start... ${new Date().toLocaleString()}\n`, function (err) {
         if (err) throw err;
         console.log('Saved! of start...');
     });

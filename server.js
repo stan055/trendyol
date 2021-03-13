@@ -1,5 +1,4 @@
 const fs = require('fs');
-const puppeteer = require('puppeteer');
 const express = require('express');
 const path = require('path');
 const parser = require('./parser/parser');
@@ -41,7 +40,8 @@ app.post('/api', async (req, res) => {
         console.log(result);
         if (result) {
             if (result.error === null) {
-                fs.appendFile('./public/data.txt', JSON.stringify(result) + '\n', function (err) {
+                let xml = parser.toXml(result);
+                fs.appendFile('./public/data.xml', xml + '\n', 'utf8', function (err) {
                     if (err) throw err;
                     console.log('Saved! of parsing-one-url');
                 });
