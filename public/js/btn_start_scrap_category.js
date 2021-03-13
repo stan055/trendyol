@@ -25,6 +25,7 @@ btnStart.addEventListener('click', () => {
         let urlCount = searchParamPi(categoryUrl);
         let urls;
         let resultHeader = "Work is done...";
+        let errorCount = 3; // Stop work if count = 0
 
         while (!btnStopSwitch) {
 
@@ -33,8 +34,12 @@ btnStart.addEventListener('click', () => {
           if (urls['result'].length !== 0 && urls['result'] !== null) {
             await scrapFromListUrls(urls['result'], categoryUrl);
           } else {
-            resultHeader = 'urls failed';
-            btnStopSwitch = !btnStopSwitch;
+            setTimeout(function(){ 
+              resultHeader = `${categoryUrl} Failed!!!`; 
+              errorCount--;
+              btnStopSwitch = errorCount === 0 ? !btnStopSwitch : btnStopSwitch;
+            }, 3000);
+            
           }
           
           urlCount++;
