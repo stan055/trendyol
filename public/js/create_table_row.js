@@ -22,9 +22,9 @@ function createTableRow (element, parrentUrl = '') {
         <td>${element.brand}</td>
         <td>${element.code}<br>${element.id}</td>
         <td>
-          originalPrice: ${element.price.originalPrice.text}, 
+          originalPrice: ${element.price.originalPrice}, 
           <br>
-          discountedPrice: ${element.price.discountedPrice.text}
+          discountedPrice: ${element.price.discountedPrice}
         </td>
         <td>
           ${size}

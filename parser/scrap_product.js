@@ -26,9 +26,10 @@ async function parseProduct (page, url) {
                 const product = initialObj.product;
                 
                 const price = {
-                        originalPrice: product.price.originalPrice ?? '',
-                        sellingPrice: product.price.sellingPrice ?? '',
-                        discountedPrice: product.price.discountedPrice ?? '',
+                        originalPrice: product.price.originalPrice.value ?? '',
+                        sellingPrice: product.price.sellingPrice.value ?? '',
+                        discountedPrice: product.price.discountedPrice.value ?? '',
+                        currency: product.price.currency ?? ''
                     }; 
 
                 let variants = product.variants.map(e => {

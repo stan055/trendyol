@@ -1,4 +1,4 @@
-async function parseText (page, selectors, url) {
+async function scrapText (page, selectors, url) {
     await page.goto(url, { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(200);
 
@@ -15,4 +15,4 @@ async function parseText (page, selectors, url) {
 }
 
 
-exports.parseText = parseText;
+exports.scrapText = scrapText;

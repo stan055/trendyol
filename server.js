@@ -14,7 +14,7 @@ app.post('/api', async (req, res) => {
 
     if (req.body.type === 'start') {
         page = await apiStart.start(page, req.body.url, req.body.setting);
-        const result = await parser.parseText(page, selectors.text, req.body.url);
+        const result = await parser.scrapText(page, selectors.text, req.body.url);
         if (result)
             res.status(200).json({result: result});
         else 

@@ -2,12 +2,19 @@ function toXml (product) {
 let xml = '';
 
 try {
+    let attributesStr = product.attributes.map(e => {
+        atrStr = `<p><b>${e.key.name}</b>: ${e.value.name}</p>` 
+        return atrStr;
+      }).toString();
+
+      const webColor = product.attributes.find(({ key }) => key.name === "Web Color");
+      const material = product.attributes.find(({ key }) => key.name === "Material");
 xml = 
 `<offers>
     <offer id="${product.id}" groups id="1225" available="true">
     <url>${product.url}</url>
-    <price>${product.price}</price>
-    <currencyId>UAH</currencyId>
+    <price>${product.price.sellingPrice}</price>
+    <currencyId>${product.price.currency}</currencyId>
     <categoryId>391</categoryId>
     <rz_group_id>152162011</rz_group_id>
     <rz_id_for_group>16623755</rz_id_for_group>
@@ -17,13 +24,15 @@ xml =
     <vendor>${product.brand}</vendor>
     <stock_quantity>100</stock_quantity>
     <name>${product.name}</name>
-    <description><![CDATA[<p>Одяг<b>Abc clothes</b> сприяє розвитку функцій головного мозку шляхом підтримки дрібної моторики.</p><p>В Abc <b>New Collection</b> буде особливо зручно стрибати, пригати та бігати.</p><p>Завдяки своїй універсальності та багатофункціональності, <b>Abc clothes</b> чудово підійде:</p><ul><li><b>Для весни</b></li><li><b>Для літа</b></li><li><b>Для ранньої осені</b></li></ul><p><b>Склад:</b>• 92% поліестер, 8%еластан, нетоксичність підтверджена в лабораторії.</p><p><b>Вага:</b> 305 г</p>]]></description>
+    <description><![CDATA[
+        ${attributesStr}
+    ]]></description>
     <param name="Зріст">146 см</param>
     <param name="Сезон">Весна-Осінь</param>
-    <param name="Колір">Чорний</param>
+    <param name="Колір">${webColor.value.name ?? ''}</param>
     <param name="Особливості моделі">З капюшоном</param>
-    <param name="Склад">92% поліестер, 8% еластан</param>
-    <param name="Країна-виробник товару">Естонія</param>
+    <param name="Склад">${material.value.name ?? ''}</param>
+    <param name="Країна-виробник товару">Країна-виробник товару</param>
     <param name="Артикул">${product.productCode}</param>
 </offer>`;
 
