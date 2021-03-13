@@ -29,16 +29,15 @@ xml =
     ]]></description>
     <param name="Зріст">146 см</param>
     <param name="Сезон">Весна-Осінь</param>
-    <param name="Колір">${webColor.value.name ?? ''}</param>
+    <param name="Колір">${webColor.value.name}</param>
     <param name="Особливості моделі">З капюшоном</param>
-    <param name="Склад">${material.value.name ?? ''}</param>
+    <param name="Склад">${material.value.name}</param>
     <param name="Країна-виробник товару">Країна-виробник товару</param>
     <param name="Артикул">${product.productCode}</param>
 </offer>`;
 
 } catch (error) {
     console.log(error);
-    throw error;
 }
 
 return xml;
