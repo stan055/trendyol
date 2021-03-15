@@ -1,3 +1,3 @@
 # trendyol
 
-<img href="./parser node.JPG" width="600">
+<img href="./parser%20node.JPG" width="600">
